@@ -1,0 +1,23 @@
+
+.sidebarPlayList {
+    color: gray;
+    height: 40px;
+    transition: 200ms color ease-in;
+    display: flex;
+    align-items: center;
+}
+
+.sidebarPlayList--active {
+    color: white !important;
+}
+
+.sidebarPlayList:hover {
+    color: white;
+    cursor: pointer;
+}
+
+.sidebarPlayList > p {
+    margin-top: 10px;
+    margin-left: 20px;
+    font-size: 14px;
+}

@@ -2,10 +2,11 @@ import React from "react";
 import "./Header.css";
 import SearchIcon from "@material-ui/icons/Search";
 import { Avatar } from "@material-ui/core";
-import { useStateValue } from "./stateProvider";
+import userState from "./atoms/userState";
+import { useRecoilValue } from "recoil";
 
 function Header() {
-  const [{ user }, dispatch] = useStateValue();
+  const user = useRecoilValue(userState);
   return (
     <div className="header">
       <div className="header__left">

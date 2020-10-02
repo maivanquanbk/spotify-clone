@@ -1,7 +1,6 @@
 .sidebarOption {
     color: gray;
     height: 40px;
-    cursor: pointer;
     transition: 200ms color ease-in;
     display: flex;
     align-items: center;
@@ -9,6 +8,7 @@
 
 .sidebarOption:hover {
     color: white;
+    cursor: pointer;
 }
 
 .sidebarOption__icon {

@@ -1,17 +1,16 @@
 import React, { useEffect } from "react";
 import Login from "./Login";
 import "./App.css";
-import { getTokenFromUrl } from "./spotify";
-import SpotifyWebApi from "spotify-web-api-js";
+import { getTokenFromUrl, spotifyApi } from "./spotify";
 import Player from "./Player";
-import { useStateValue } from "./stateProvider";
-import { actionTypes } from "./reducer";
-
-const spotify = new SpotifyWebApi();
+import { useRecoilState } from "recoil";
+import userState from "./atoms/userState";
+import playListsState from "./atoms/playListsState";
 
 function App() {
 
-  const [{ token }, dispatch] = useStateValue();
+  const [user, setUser] = useRecoilState(userState);
+  const [playLists, setPlayLists] = useRecoilState(playListsState);
 
   useEffect(() => {
     const hash = getTokenFromUrl();
@@ -19,37 +18,19 @@ function App() {
     window.location.hash = "";
 
     if (_token) {
-      spotify.setAccessToken(_token);
+      spotifyApi.setAccessToken(_token);
 
-      dispatch({
-        type: actionTypes.SET_TOKEN,
-        token: _token,
+      spotifyApi.getMe().then((user) => {
+        setUser(user);
       });
 
-      spotify.getMe().then((user) => {
-        dispatch({
-          type: actionTypes.SET_USER,
-          user: user,
-        });
-      });
-
-      spotify.getUserPlaylists().then((playLists) => {
-        dispatch({
-          type: actionTypes.SET_PLAYLISTS,
-          playLists: playLists,
-        });
-      });
-
-      spotify.getPlaylist("37i9dQZEVXcH5HMHjbkP4b").then(playList => {
-        dispatch({
-          type: actionTypes.SET_DISCOVER_WEEKLY,
-          discoverWeekly: playList,
-        });
+      spotifyApi.getUserPlaylists().then((playLists) => {
+        setPlayLists(playLists);
       });
     }
   }, []);
 
-  return <div className="app">{token ? <Player /> : <Login />}</div>;
+  return <div className="app">{user ? <Player /> : <Login />}</div>;
 }
 
 export default App;

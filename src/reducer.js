@@ -10,12 +10,10 @@ export const actionTypes = {
   SET_USER: "SET_USER",
   SET_TOKEN: "SET_TOKEN",
   SET_PLAYLISTS: "SET_PLAYLISTS",
-  SET_DISCOVER_WEEKLY: "SET_DISCOVER_WEEKLY"
+  SET_CURRENT_PLAYLIST: "SET_CURRENT_PLAYLIST"
 };
 
 const reducer = (state, action) => {
-  console.log(action);
-
   switch (action.type) {
     case actionTypes.SET_USER:
       return {
@@ -32,10 +30,10 @@ const reducer = (state, action) => {
         ...state,
         playLists: action.playLists,
       };
-    case actionTypes.SET_DISCOVER_WEEKLY:
+    case actionTypes.SET_CURRENT_PLAYLIST:
       return {
         ...state,
-        discoverWeekly: action.discoverWeekly,
+        currentPlayList: action.currentPlayList,
       };
     default:
       return state;

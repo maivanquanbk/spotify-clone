@@ -4,10 +4,12 @@ import SidebarOption from "./SidebarOption";
 import HomeIcon from "@material-ui/icons/Home";
 import SearchIcon from "@material-ui/icons/Search";
 import LibraryMusicIcon from "@material-ui/icons/LibraryMusic";
-import { useStateValue } from "./stateProvider";
+import SidebarPlayList from "./SidebarPlayList";
+import { useRecoilValue } from "recoil";
+import playListsState from "./atoms/playListsState";
 
 function Sidebar() {
-  const [{ playLists }, _] = useStateValue();
+  const playLists = useRecoilValue(playListsState);
 
   return (
     <div className="sidebar">
@@ -26,7 +28,7 @@ function Sidebar() {
       <hr />
 
       {playLists?.items?.map((item) => (
-        <SidebarOption title={item.name} />
+        <SidebarPlayList key={item.id} playList={item} />
       ))}
     </div>
   );

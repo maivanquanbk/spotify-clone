@@ -3,14 +3,23 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { StateProvider } from "./stateProvider";
-import reducer, { initialState } from "./reducer";
+import { RecoilRoot } from "recoil";
+import ErrorBoundary from "./ErrorBoundary";
+
+window.addEventListener('beforeunload', (event) => {
+  // Cancel the event as stated by the standard.
+  event.preventDefault();
+  // Older browsers supported custom message
+  event.returnValue = '';
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <StateProvider initialState={initialState} reducer={reducer}>
-      <App />
-    </StateProvider>
+    <RecoilRoot>
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
+    </RecoilRoot>
   </React.StrictMode>,
   document.getElementById("root")
 );
